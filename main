@@ -1,0 +1,39 @@
+import random
+from queue import *
+
+random.seed(random.randint(1, 100))
+
+#Get random word from list
+WORDS = ["zebra", "hockey", "signature", "pizza", "nature", "safety", "presentation", "atmosphere", "profession", "preparation", "revolution", "currency", "profession"]
+guessWord = random.choice(WORDS)
+
+#Turn it into an array of characters
+guessArr = list(guessWord)
+#Array of blanks that they will guess from
+blankArr =   ["*"] * len(guessArr)
+wrongGuesses = 0
+wrongGuess = Queue(maxsize = 6)
+thisGuess = ""
+blankStr = ""
+
+while((wrongGuesses < 7) or (blankArr.count("*") is not 0)):
+    thisGuess = input("Input a character to guess: ")
+    if(thisGuess in guessArr):
+        for i in range(0, len(guessArr)):
+            if(guessArr[i] is thisGuess):
+                blankArr[i] = thisGuess
+    else:
+        if(list(wrongGuess.queue).count(thisGuess) is 0):
+            wrongGuess.put(thisGuess)
+            print("Wrong guesses: ", list(wrongGuess.queue))
+            wrongGuesses = wrongGuesses + 1
+        else:
+            print("Wrong guesses: ", list(wrongGuess.queue))
+    blankStr = ''.join(blankArr)
+    print(blankStr)
+
+if(wrongGuesses < 6):
+    print("You win!")
+else:
+    print("You lose!")
+print("You lose!")
